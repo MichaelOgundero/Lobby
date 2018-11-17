@@ -28,4 +28,13 @@ public class HelloAppEngine extends HttpServlet {
     response.getWriter().print("Hello App Engine Rovshan Shirinli!\r\n");
 
   }
+public void doPost(HttpServletRequest request, HttpServletResponse response) 
+	      throws IOException {
+
+	    response.setContentType("text/plain");
+	    response.setCharacterEncoding("UTF-8");
+
+	    response.getWriter().print("POST App Engine Rovshan Shirinli!\r\n");
+
+	  }
 }
