@@ -1,4 +1,4 @@
-package ricks;
+package servlets;
 
 import java.io.IOException;
 

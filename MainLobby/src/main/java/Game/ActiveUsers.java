@@ -1,4 +1,4 @@
-package ricks;
+package Game;
 
 import com.google.gson.Gson;
 

@@ -1,4 +1,4 @@
-package ricks;
+package servlets;
 
 import javax.servlet.annotation.WebFilter;
 
