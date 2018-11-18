@@ -1,6 +1,6 @@
 package Game;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
 
 import com.google.gson.Gson;
@@ -9,10 +9,10 @@ import com.google.gson.Gson;
 public class GameLobby {
 private int GameID;
 private String Name;
-private List<ActiveUsers> users;
+private ArrayList<ActiveUsers> users;
 private int mode;
 private int Seed;
-private List<ActiveUsers> Readyusers;
+
 
 public String JoinGameLobby(ActiveUsers s) {//add users to game lobby
 	if(Check(s.getUsername())==true ) {
@@ -22,6 +22,7 @@ public String JoinGameLobby(ActiveUsers s) {//add users to game lobby
 		return "size full";//size full
 	}
 	users.add(s);
+	s.setGameLobby(this.GameID);
 	return "Success";
 }
 public GameLobby(int gameID, int mode) {//game lobby constructor
@@ -40,7 +41,8 @@ private String GameNameGenarator() {
 public String LeaveGameLobby(String username) {//user leave game lobby
 	if(Check(username)) {
 		users.remove(getUser(username));
-		return "Success";
+		getUser(username).setGameLobby(0);
+		return this.ToJSon();
 	}else {	return "user not in game";}
 	
 
@@ -48,38 +50,37 @@ public String LeaveGameLobby(String username) {//user leave game lobby
 public String Ready( String username) {	//user ready or unready
 	
 	if(Check(username)) {
-		if(CheckReadyuser(username)) {
-			Readyusers.remove(getUser(username));
-			return "user unready";
-		}else {
-		Readyusers.add(getUser(username)); 
-		return "user ready";
-		}
-	}else return "user not in game";
+		getUser(username).setReady(true);
+	return this.ToJSon();
+	}
+	else return "user not in game";
+
+}
+public String UnReady( String username) {	//user ready or unready
+	
+	if(Check(username)) {
+		getUser(username).setReady(false);
+	return this.ToJSon();
+	}
+	else return "user not in game";
+
 }
 public String RenameLobby(String username ,  String Newname) //rename game lobby
 {
 	if(Check(username)) {
 		this.Name=Newname;
-		return "Success";
+		return this.ToJSon();
 	}
 	return "user not ingame";
 }
 public String SetSeed( String username, int NewSeed) { 	// set seed
 	if(Check(username)) {
 		this.Seed=NewSeed;
-		return "Success";
+		return this.ToJSon();
 	}
 	return "user not ingame";
 }
-private boolean CheckReadyuser (String username) {
-	for (ActiveUsers temp : Readyusers) {
-		if(temp.getUsername()==username) {
-			return true;
-		}
-	}
-	return false;
-}
+
 private boolean Check (String username) {
 	for (ActiveUsers temp : users) {
 		if(temp.getUsername()==username) {
@@ -89,35 +90,18 @@ private boolean Check (String username) {
 	return false;
 }
 
-/*
-public JSONObject GetGameLobbyData() {
-	JSONObject   value =  	new JSONObject();
-try {
-	value.put("GameID",this.GameID);
-	value.put("Name",this.Name);
-	JSONArray Users=new JSONArray();
-	for(ActiveUsers temp : users) {
-	Users.put(temp.getJsonData());
-	}
-	value.put("Users",Users);
-	value.put( "Mode", this.mode);
-	value.put("Seed", this.Seed);
-} catch (JSONException e) {
-	// TODO Auto-generated catch block
-	e.printStackTrace();
-}
-
-	return value;
-}*/
 
 public boolean allReady() {		// check if all users are ready
-	boolean flag;
-	if(Readyusers.size()==4)
-		{flag=true;}
-	else {
-		flag=false;
+	int flag = 0;
+	for (ActiveUsers temp : users) {
+		if(temp.isReady()==true)
+			flag++;
 	}
-	return flag;
+	if(flag==4)
+		{return true;}
+	else
+		return false;
+	 
 }
 
 private ActiveUsers getUser(String username) {

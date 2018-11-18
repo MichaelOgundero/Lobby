@@ -1,28 +1,40 @@
 package Game;
-import java.util.List;
+import java.util.ArrayList;
+
 import java.util.Random;
 
 import com.google.gson.Gson;
 
 
-
-
 public class MainLobby {
 	
-private List<GameLobby> ListGameLobby ;
+ private static MainLobby instance = null;
+	
+private ArrayList<GameLobby> ListGameLobby ;
 
-private List<ActiveUsers> ListUsers ;
+private ArrayList<ActiveUsers> ListUsers ;
 
+
+public MainLobby() {
+}
+
+public static MainLobby getInstance() {
+    if (instance == null) {
+        instance = new MainLobby();
+    }
+    return instance;
+}
+//MainLobby.getInstance();
 
 public String FinishGame(int GameID) {	//will be given to Game Engine delete the game lobby from the list
-	if(GameIDCheck(GameID)) {
+	if(MainLobby.getInstance().GameIDCheck(GameID)) {
 		return "Game with given ID does not exist";
 		
 	}else {
-		for (GameLobby temp : ListGameLobby) {
+		for (GameLobby temp : MainLobby.getInstance().ListGameLobby) {
 			
 			if(temp.getGameID()==GameID) 
-			{ListGameLobby.remove(temp);
+			{MainLobby.getInstance().ListGameLobby.remove(temp);
 			return "Action completed successfully";	
 			}
 			}
@@ -34,35 +46,35 @@ public String NewGameLobby(int playerNumber,String username) {//add new Game lob
 	if(playerNumber>4||playerNumber<0) {
 		return "Wrong number of Players";
 	}
-	if(CheckUserGameLobby(username,0) == false) {
+	if(MainLobby.getInstance().CheckUserGameLobby(username,0) == false) {
 		return "User already in Game";
 	}
 	int newGameID= GenarateGameID();
 	GameLobby newone=new GameLobby(newGameID, playerNumber);
 	newone.JoinGameLobby(GetActiveUser(username));
-	GetActiveUser(username).setGameLobby(newGameID);
-	ListGameLobby.add(newone);
-	return  "Action completed successfully";
+	MainLobby.getInstance().GetActiveUser(username).setGameLobby(newGameID);
+	MainLobby.getInstance().ListGameLobby.add(newone);
+	return newone.ToJSon();
 }
 
 public String JoinGameLobby(String username,int GameID) {// add user to game lobby (join game lobby)
 	boolean flag1= false;
 	
-			if(!GameIDCheck(GameID)) {
+			if(!MainLobby.getInstance().GameIDCheck(GameID)) {
 				return "INvalid GameID";
 			}else {
 				flag1=true;
 			}
 			//the specific game ID exists otherwise INvalid GameID
 		
-			if(CheckUserGameLobby(username,0) == false) {
+			if(MainLobby.getInstance().CheckUserGameLobby(username,0) == false) {
 				return "user already in game";
 			}
-	if(CheckUserGameLobby(username,0) == true) {//confirm user not in any game
+	if(MainLobby.getInstance().CheckUserGameLobby(username,0) == true) {//confirm user not in any game
 		
 		if(flag1==true) {
-			ActiveUsers one = GetActiveUser(username);
-			for (GameLobby temp : ListGameLobby) {
+			ActiveUsers one = MainLobby.getInstance().GetActiveUser(username);
+			for (GameLobby temp : MainLobby.getInstance().ListGameLobby) {
 				
 				if(temp.getGameID()==GameID) {
 					one.setGameLobby(GameID);//Changing the gameID of user 
@@ -74,7 +86,7 @@ public String JoinGameLobby(String username,int GameID) {// add user to game lob
 	return "Fail";
 }
 private boolean GameIDCheck(int GameIDtest) {//checks if GameID exists
-	for (GameLobby temp : ListGameLobby) {
+	for (GameLobby temp : MainLobby.getInstance().ListGameLobby) {
 		
 		if(temp.getGameID()==GameIDtest) {
 			return true;
@@ -88,7 +100,7 @@ private int GenarateGameID() {
 Random rand = new Random();
 int number;
 number=rand.nextInt();
-for (GameLobby temp : ListGameLobby) {
+for (GameLobby temp : MainLobby.getInstance().ListGameLobby) {
 	
 	if(temp.getGameID()==number || number==0) {
 		number = GenarateGameID();
@@ -99,7 +111,7 @@ for (GameLobby temp : ListGameLobby) {
 }
 private ActiveUsers GetActiveUser(String username) {
 	
-	for (ActiveUsers temp : ListUsers) {
+	for (ActiveUsers temp : MainLobby.getInstance().ListUsers) {
 		if(temp.getUsername()==username) {
 			return temp;
 		}}
@@ -108,7 +120,7 @@ private ActiveUsers GetActiveUser(String username) {
 
 private boolean CheckUserGameLobby(String username, int GameID) {
 	
-	for (ActiveUsers temp : ListUsers) {
+	for (ActiveUsers temp : MainLobby.getInstance().ListUsers) {
 		if(temp.getUsername()==username) {
 			if(temp.getGameLobby()==GameID)
 			{
@@ -122,33 +134,28 @@ private boolean CheckUserGameLobby(String username, int GameID) {
 public String toJson() {
 	
 	Gson gson = new Gson();
-	String json = gson.toJson(this);  
+	String json = gson.toJson(MainLobby.getInstance());  
 	return json; 
 }
 public void loadFromJson(String json) throws Throwable {
 	Gson gson = new Gson();
 	MainLobby new1=gson.fromJson(json, MainLobby.class);
-	this.ListGameLobby=new1.ListGameLobby;
-	this.ListUsers=new1.ListUsers;
+	instance.ListGameLobby=new1.ListGameLobby;
+	instance.ListUsers=new1.ListUsers;
 	new1.finalize();
 }
-/*
-public JSONObject GetGameList(String username) {
-	
-	JSONObject   value =  	new JSONObject();
-	try {
-		value.put("NumberOfGames", ListGameLobby.size());
-	JSONArray Games=new JSONArray();
-	for (GameLobby temp : ListGameLobby) {
-		Games.put(temp.GetGameLobbyData());
+public GameLobby getGameLobbyfromUsername(String username) {
+	int gameId=GetActiveUser(username).getGameLobby();
+	for (GameLobby temp : MainLobby.getInstance().ListGameLobby) {
+		if(temp.getGameID()==gameId) {
+			return temp;
+		}
 	}
-	value.put("GamesList", Games);
-	} catch (JSONException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	return value;
+	return null;
 }
-*/
+
+public void PopulateActiveUsers(String json) {//get the users from khloud in a request and put them here
+	
+}
 
 }

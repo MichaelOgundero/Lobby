@@ -1,33 +1,38 @@
 package servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class Ready
- */
-@WebServlet("/Ready")
+import Game.MainLobby;
+
+
+
+@WebServlet(
+name = "ready",
+urlPatterns = {"/Ready"}
+)
+
 public class Ready extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Ready() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see HttpServlet#doPut(HttpServletRequest request, HttpServletResponse response)
-	 */
+  
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		String userName=request.getParameter("userName");
+		
+		//Here should be Kholoud Active user list request and updating my own list
+		String gameLobby=MainLobby.getInstance().getGameLobbyfromUsername(userName).Ready(userName);
+		
+	
+		 PrintWriter out = response.getWriter();
+	     out.print(gameLobby);
 	}
 
 	

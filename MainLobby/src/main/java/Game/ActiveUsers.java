@@ -7,7 +7,7 @@ private String username;
 private int GameLobby;
 private int win;
 private int Loses;
-
+private boolean ready=false;
 
 
 public String getUsername() {
@@ -70,5 +70,13 @@ public JSONObject getJsonData() {
 	return test;
 }
 */
+
+public boolean isReady() {
+	return ready;
+}
+
+public void setReady(boolean ready) {
+	this.ready = ready;
+}
 
 }

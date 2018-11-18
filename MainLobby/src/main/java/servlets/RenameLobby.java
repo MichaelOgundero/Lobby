@@ -1,33 +1,37 @@
 package servlets;
-
+import Game.MainLobby;
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class RenameLobby
- */
-@WebServlet("/RenameLobby")
+
+
+@WebServlet(
+name = "renamelobby",
+urlPatterns = {"/RenameLobby"}
+)
+
+
 public class RenameLobby extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public RenameLobby() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doPut(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		String userName=request.getParameter("userName");
+		String newLobbyName=request.getParameter("newLobbyName");
+		//Here should be Kholoud Active user list request and updating my own list
+		String gameLobby=MainLobby.getInstance().getGameLobbyfromUsername(userName).RenameLobby(userName, newLobbyName);
+	
+	
+		 PrintWriter out = response.getWriter();
+	     out.print(gameLobby);
 	}
 
 }
