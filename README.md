@@ -2,24 +2,15 @@
 the lobby for the strategy game
 Rovshan
 
+Please use the NEXT brach when cloning or looking for the latest version
 
-1- create a fully working version on memory
-2- create version that works on local  MS Sql
-3- create the HttpServlet part and upload to Google change boolean return operations to error string 
-4- fix the MS-Sql on Google
-5- push to GitHub
-6- create a documentation
-
-
-PS for step 3 boolean to error string change only change the functions that you will use
-for the HttpServlet  because other internal details doesn’t matter
+- create version that works on local  MS Sql
+- fix the HttpServlet part and upload to Google /lobbyservice module can be found in the appengine.xml 
+- fix the MS-Sql on Google
+- create a documentation
 
 Notes 
 GameID == 0  means the user is in no Gamelobby can only be at MainLobby 
 
 
 json format data usage complete servlet management and Ms sql persistance needed
-
-
-
-IN the next release I will prove documentation on the types of the files and also Json keys in the responses of all requests
