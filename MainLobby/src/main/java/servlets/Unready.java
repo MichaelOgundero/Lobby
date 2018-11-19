@@ -23,7 +23,7 @@ public class Unready extends HttpServlet {
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		String userName=request.getParameter("userName");
+		String userName=request.getParameter("username");
 		
 		//Here should be Kholoud Active user list request and updating my own list
 		String gameLobby=MainLobby.getInstance().getGameLobbyfromUsername(userName).UnReady(userName);

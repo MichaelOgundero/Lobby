@@ -22,8 +22,8 @@ public class NewGameLobby extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		String playernum=request.getParameter("playerNumber");
-		String userName=request.getParameter("userName");
+		String playernum=request.getParameter("playernumber");
+		String userName=request.getParameter("username");
 		//Here should be Kholoud Active user list request and updating my own list
 		
 		int playernumber=Integer.parseInt(playernum);

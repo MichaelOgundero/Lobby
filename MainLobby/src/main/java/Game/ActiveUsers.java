@@ -3,11 +3,11 @@ package Game;
 import com.google.gson.Gson;
 
 public class ActiveUsers {
-private String username;
-private int GameLobby;
-private int win;
-private int Loses;
-private boolean ready=false;
+public String username;
+public int GameLobby;
+public int win;
+public int Loses;
+public boolean ready=false;
 
 
 public String getUsername() {

@@ -28,7 +28,7 @@ public class JoinGameLobby extends HttpServlet {
 		
 		
 		String gameID=request.getParameter("gameID");
-		String userName=request.getParameter("userName");
+		String userName=request.getParameter("username");
 		//Here should be Kholoud Active user list request and updating my own list
 		
 		int gameId=Integer.parseInt(gameID);

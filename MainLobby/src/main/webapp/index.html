@@ -6,7 +6,7 @@
   </head>
 
   <body>
-    <h1>List of my servlets!</h1>
+    <h1>List of my servlets! After each i have specified the parameter keys required</h1>
   
     <table>
       <tr>
@@ -16,34 +16,37 @@
         <td><a href='/hello'>Hello world</a></td>
       </tr>
        <tr>
-        <td><a href='/FinishGame'>Finish game</a></td>
+        <td><a href='/FinishGame'>Finish game "username" </a></td>
       </tr>
        <tr>
         <td><a href='/GetGameList'>GetGameList</a></td>
       </tr>
        <tr>
-        <td><a href='/GetGameLobbyData'>GetGameLobbyData</a></td>
+        <td><a href='/GetGameLobbyData'>GetGameLobbyData  "username" </a></td>
       </tr>
       <tr>
-        <td><a href='/JoinGameLobby'>JoinGameLobby</a></td>
+        <td><a href='/JoinGameLobby'>JoinGameLobby "gameID"  "username"</a></td>
       </tr>
       <tr>
-        <td><a href='/LeaveGameLobby'>LeaveGameLobby</a></td>
-      </tr>
-       <tr>
-        <td><a href='/NewGameLobby'>NewGameLobby</a></td>
-      </tr> 
-      <tr>
-        <td><a href='/Ready'>Ready</a></td>
+        <td><a href='/LeaveGameLobby'>LeaveGameLobby "username" </a></td>
       </tr>
        <tr>
-        <td><a href='/RenameLobby'>RenameLobby</a></td>
+        <td><a href='/NewGameLobby'>NewGameLobby  "playernumber"  "username" </a></td>
       </tr> 
       <tr>
-        <td><a href='/SetSeed'>SetSeed</a></td>
+        <td><a href='/Ready'>Ready  "username"</a></td>
+      </tr>
+       <tr>
+        <td><a href='/RenameLobby'>RenameLobby  "username"  "newlobbyname"</a></td>
       </tr> 
       <tr>
-        <td><a href='/Unready'>Unready</a></td>
+        <td><a href='/SetSeed'>SetSeed  "seed" "username"</a></td>
+      </tr> 
+      <tr>
+        <td><a href='/Unready'>Unready "username"</a></td>
+      </tr>
+       <tr>
+        <td><a href='/useradd'>Add user temp available for testing "username" type string</a></td>
       </tr>
       
     </table>

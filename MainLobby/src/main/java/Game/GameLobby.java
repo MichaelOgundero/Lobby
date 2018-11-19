@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 public class GameLobby {
 private int GameID;
 private String Name;
-private ArrayList<ActiveUsers> users;
+private ArrayList<ActiveUsers> users= new ArrayList<ActiveUsers>();
 private int mode;
 private int Seed;
 
@@ -40,8 +40,9 @@ private String GameNameGenarator() {
 
 public String LeaveGameLobby(String username) {//user leave game lobby
 	if(Check(username)) {
-		users.remove(getUser(username));
 		getUser(username).setGameLobby(0);
+		users.remove(getUser(username));
+		
 		return this.ToJSon();
 	}else {	return "user not in game";}
 	

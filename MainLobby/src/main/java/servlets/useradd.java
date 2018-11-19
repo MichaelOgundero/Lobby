@@ -11,26 +11,24 @@ import javax.servlet.http.HttpServletResponse;
 
 import Game.MainLobby;
 
-
-@WebServlet(
-name = "getgamelobbydata",
-urlPatterns = {"/GetGameLobbyData"}
-)
-public class GetGameLobbyData extends HttpServlet {
+//this is a temporary servlet to test adding users on my own
+@WebServlet("/useradd")
+public class useradd extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
- 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		String userName=request.getParameter("username");
-	
-		//Here should be Kholoud Active user list request and updating my own list
-		String gameLobby=MainLobby.getInstance().getGameLobbyfromUsername(userName).ToJSon();
+		String username=request.getParameter("username");
+		
+	MainLobby.getInstance().PopulateActiveUsersDemo(username, 0, 0);
+	String mainlobby =MainLobby.getInstance().toJson();
 	
 		 PrintWriter out = response.getWriter();
-	     out.print(gameLobby);
+	     out.print(mainlobby);
+		
 	}
-
 
 }
