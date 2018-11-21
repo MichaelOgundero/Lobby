@@ -47,7 +47,7 @@ public String NewGameLobby(int playerNumber,String username) {//add new Game lob
 		return "Wrong number of Players";
 	}
 	if(MainLobby.getInstance().CheckUserGameLobby(username,0) == false) {
-		return "User already in Game";
+		return "User already in another Game";
 	}
 	int newGameID= GenarateGameID();
 	GameLobby newone=new GameLobby(newGameID, playerNumber);
@@ -168,7 +168,7 @@ public String PopulateActiveUsersDemo(String username,int win,int lose) {
 	user.setLoses(lose);
 	user.setReady(false);
 	user.setWin(win);
-	ListUsers.add(user);
+	MainLobby.getInstance().ListUsers.add(user);
 	return MainLobby.getInstance().toJson();
 }
 
