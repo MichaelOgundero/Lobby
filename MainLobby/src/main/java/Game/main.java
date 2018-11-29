@@ -51,6 +51,8 @@ public class main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		String mainlobby2 =MainLobby.getInstance().toJson();
+		System.out.println(mainlobby2);
 	}
 
 }

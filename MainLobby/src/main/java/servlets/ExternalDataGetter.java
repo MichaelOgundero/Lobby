@@ -25,7 +25,7 @@ public class ExternalDataGetter {
 		int score;
 	}
 	private String ActiveUserURL= "https://security-dot-training-project-lab.appspot.com/activeusers";//the link of security API
-	
+	private String StartGameURL="";
 	public void loadFromDatabase() {//load from MS-sql (call first)
 		
 	}
@@ -48,8 +48,9 @@ public class ExternalDataGetter {
 				response.append(inputLine);
 			}
 			in.close();
+			
 			Type listType = new TypeToken<ArrayList<Wrapper>>(){}.getType();
-			List<Wrapper> ActiveUserList = new Gson().fromJson(response.toString(), listType);
+			ArrayList<Wrapper> ActiveUserList = new Gson().fromJson(response.toString(), listType);
 			
 		
 			System.out.println("number of my Wrappers"+ ActiveUserList.size());
@@ -57,7 +58,14 @@ public class ExternalDataGetter {
 			for(int i=0;i<ActiveUserList.size();i++) {
 				ActiveUsers mine= new ActiveUsers();
 				//check if the user is in any game
-				//if() {}
+				if(MainLobby.getInstance().CheckUserInActivelist(ActiveUserList.get(i).email)) {
+					System.out.println("user already in the list");
+				}else {
+					ActiveUsers new1=new ActiveUsers();
+					new1.setUsername(ActiveUserList.get(i).email);
+					new1.setWin(ActiveUserList.get(i).score);
+					MainLobby.getInstance().PopulateActiveUsers(new1);
+				}
 				
 			}
 			
@@ -68,5 +76,20 @@ public class ExternalDataGetter {
 		}
 		
 	}
-	
+
+	public void CallStartGame(String[] useranmes,int seed) throws IOException{
+		URL obj = new URL(StartGameURL);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setRequestMethod("POST");
+		int responseCode = con.getResponseCode();
+		System.out.println("POST Response Code :: " + responseCode);
+		
+		
+		if (responseCode == HttpURLConnection.HTTP_OK) { // success
+			
+			
+		} else {
+			System.out.println("GET request not worked");
+		}
+	}
 }

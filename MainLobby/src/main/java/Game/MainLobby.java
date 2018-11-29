@@ -176,8 +176,8 @@ public String PopulateActiveUsersDemo(String username,int win,int lose) {
 	return MainLobby.getInstance().toJson();
 }
 
-public void PopulateActiveUsers(String json) {//get the users from khloud in a request and put them here
-	
+public void PopulateActiveUsers(ActiveUsers s ) {//get the users from khloud in a request and put them here
+	MainLobby.getInstance().ListUsers.add(s);
 }
 
 }
