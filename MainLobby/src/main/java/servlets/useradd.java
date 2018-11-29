@@ -19,18 +19,43 @@ public class useradd extends HttpServlet {
        
   
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		 String paramName = "username";
+
+		String username=request.getParameter(paramName);
 	
+		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		 PrintWriter out = response.getWriter();
-		 
-		String username=request.getParameter("username");
-		 out.print("Entered username\t"+username+"\n");
+	//	 out.print("Entered username\t"+username+"\n");
 	MainLobby.getInstance().PopulateActiveUsersDemo(username, 0, 0);
+	String firstuseradded =MainLobby.getInstance().toJson();
+	   //out.println(request.getQueryString());
+	
+	//  out.print(firstuseradded);						//first user
+		
+	
+	//  out.println(MainLobby.getInstance().PopulateActiveUsersDemo("default",20,10));		//adding default user
+	
+	MainLobby.getInstance().NewGameLobby(2, username);
+	MainLobby.getInstance().CheckUserInActivelist(username);
+	
+	int ID =MainLobby.getInstance().getGameLobbyfromUsername(username).getGameID();
+	
+	MainLobby.getInstance().CheckUserGameLobby(username,ID);
+	 String mainlobby1 = MainLobby.getInstance().toJson();
+	 MainLobby.getInstance().PopulateActiveUsersDemo("default", 0, 0);
+	// out.print(mainlobby1);							//creating a gamelobby from user
+	MainLobby.getInstance().JoinGameLobby("default", ID);
+	mainlobby1 = MainLobby.getInstance().toJson();
+	
+//	out.print(mainlobby1);							//adding user default to that lobby
+	MainLobby.getInstance().getGameLobbyfromUsername(username).LeaveGameLobby(username);
+	
 	String mainlobby =MainLobby.getInstance().toJson();
+	   out.println(request.getQueryString());
 	
-	
-	     out.print(mainlobby);
+	    out.print(mainlobby);				//removing first user from the lobby
 		
 	}
 

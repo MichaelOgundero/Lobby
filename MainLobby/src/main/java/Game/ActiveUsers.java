@@ -3,11 +3,11 @@ package Game;
 import com.google.gson.Gson;
 
 public class ActiveUsers {
-public String username;
-public int GameLobby;
-public int win;
-public int Loses;
-public boolean ready=false;
+private String username= new String();
+private int GameLobby;
+private int win; // this indicates the Score parameter that will be parsed from the Security
+
+private boolean ready=false;
 
 
 public String getUsername() {
@@ -34,13 +34,7 @@ public void setWin(int win) {
 	this.win = win;
 }
 
-public int getLoses() {
-	return Loses;
-}
 
-public void setLoses(int loses) {
-	Loses = loses;
-}
 public String ToJSon() {
 	Gson gson = new Gson();
 	String json = gson.toJson(this);  
@@ -52,7 +46,7 @@ public void fromJson(String json) {
 	this.username=new1.username;
 	this.GameLobby=new1.GameLobby;
 	this.win=new1.win;
-	this.Loses=new1.Loses;
+
 }
 /*
 public JSONObject getJsonData() {

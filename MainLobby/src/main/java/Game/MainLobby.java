@@ -20,6 +20,8 @@ public MainLobby() {
 
 public static MainLobby getInstance() {
     if (instance == null) {
+    	
+    	
         instance = new MainLobby();
     }
     return instance;
@@ -117,7 +119,7 @@ private ActiveUsers GetActiveUser(String username) {
 	return null;
 }
 
-private boolean CheckUserGameLobby(String username, int GameID) {
+public boolean CheckUserGameLobby(String username, int GameID) {
 	
 	for (ActiveUsers temp : MainLobby.getInstance().ListUsers) {
 		if(temp.getUsername()==username) {
@@ -129,7 +131,7 @@ private boolean CheckUserGameLobby(String username, int GameID) {
 	}
 	return false;
 }
-boolean CheckUserInActivelist (String username) {
+public boolean CheckUserInActivelist (String username) {
 	for (ActiveUsers temp : ListUsers) {
 		if(temp.getUsername()==username) {
 			return true;
@@ -151,7 +153,9 @@ public void loadFromJson(String json) throws Throwable {
 	new1.finalize();
 }
 public GameLobby getGameLobbyfromUsername(String username) {
-	
+	if(GetActiveUser(username)==null) {
+		
+	}
 	int gameId=GetActiveUser(username).getGameLobby();
 	for (GameLobby temp : MainLobby.getInstance().ListGameLobby) {
 		if(temp.getGameID()==gameId) {
@@ -165,10 +169,10 @@ public String PopulateActiveUsersDemo(String username,int win,int lose) {
 	ActiveUsers user= new ActiveUsers();
 	user.setUsername(username);
 	user.setGameLobby(0);
-	user.setLoses(lose);
 	user.setReady(false);
 	user.setWin(win);
 	MainLobby.getInstance().ListUsers.add(user);
+	
 	return MainLobby.getInstance().toJson();
 }
 
