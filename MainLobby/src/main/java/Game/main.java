@@ -51,8 +51,23 @@ public class main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		/*
+		//trying the khouloud call
+		MainLobby.getInstance().NewGameLobby(2, "houssam_mahdi");
+		System.out.println(MainLobby.getInstance().getGameLobbyfromUsername("houssam_mahdi").ToJSon());
 		String mainlobby2 =MainLobby.getInstance().toJson();
 		System.out.println(mainlobby2);
+		*/
+		
+		String[] users= {"houssam","nesq1","rick"};
+		try {
+			mine.CallStartGame(users, 15);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 }

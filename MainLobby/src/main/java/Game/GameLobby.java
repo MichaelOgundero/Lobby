@@ -84,7 +84,7 @@ public String SetSeed( String username, int NewSeed) { 	// set seed
 
 private boolean Check (String username) {
 	for (ActiveUsers temp : users) {
-		if(temp.getUsername()==username) {
+		if(temp.getUsername().equals(username)) {
 			return true;
 		}
 	}
@@ -107,7 +107,7 @@ public boolean allReady() {		// check if all users are ready
 
 private ActiveUsers getUser(String username) {
 	for (ActiveUsers temp : users) {
-		if(temp.getUsername()==username) {
+		if(temp.getUsername().equals(username)) {
 			return temp;
 		}
 	}

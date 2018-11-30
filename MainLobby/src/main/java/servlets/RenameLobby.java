@@ -27,7 +27,13 @@ public class RenameLobby extends HttpServlet {
 		String userName=request.getParameter("username");
 		String newLobbyName=request.getParameter("newlobbyname");
 		//Here should be Kholoud Active user list request and updating my own list
-		
+		ExternalDataGetter mine= new ExternalDataGetter();
+		try {
+			mine.UpdateActiveUsers();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String gameLobby=MainLobby.getInstance().getGameLobbyfromUsername(userName).RenameLobby(userName, newLobbyName);
 	
 	

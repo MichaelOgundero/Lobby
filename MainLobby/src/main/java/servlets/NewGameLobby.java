@@ -19,12 +19,20 @@ public class NewGameLobby extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 
-	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		String playernum=request.getParameter("playernumber");
 		String userName=request.getParameter("username");
 		//Here should be Kholoud Active user list request and updating my own list
+		ExternalDataGetter mine= new ExternalDataGetter();
+		try {
+			mine.UpdateActiveUsers();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		int playernumber=Integer.parseInt(playernum);
 		

@@ -113,7 +113,7 @@ for (GameLobby temp : MainLobby.getInstance().ListGameLobby) {
 }
 private ActiveUsers GetActiveUser(String username) {
 	for (ActiveUsers temp : MainLobby.getInstance().ListUsers) {
-		if(temp.getUsername()==username) {
+		if(temp.getUsername().equals(username)) {
 			return temp;
 		}}
 	return null;
@@ -122,7 +122,7 @@ private ActiveUsers GetActiveUser(String username) {
 public boolean CheckUserGameLobby(String username, int GameID) {
 	
 	for (ActiveUsers temp : MainLobby.getInstance().ListUsers) {
-		if(temp.getUsername()==username) {
+		if(temp.getUsername().equals(username)) {
 			if(temp.getGameLobby()==GameID)
 			{
 				return true;
@@ -133,7 +133,7 @@ public boolean CheckUserGameLobby(String username, int GameID) {
 }
 public boolean CheckUserInActivelist (String username) {
 	for (ActiveUsers temp : ListUsers) {
-		if(temp.getUsername()==username) {
+		if(temp.getUsername().equals(username)) {
 			return true;
 		}
 	}
@@ -154,7 +154,11 @@ public void loadFromJson(String json) throws Throwable {
 }
 public GameLobby getGameLobbyfromUsername(String username) {
 	if(GetActiveUser(username)==null) {
-		
+		for (ActiveUsers temp : ListUsers) {
+			System.out.println(temp.getUsername());
+		}
+		String mainlobby2 =MainLobby.getInstance().toJson();
+		System.out.println(mainlobby2);
 	}
 	int gameId=GetActiveUser(username).getGameLobby();
 	for (GameLobby temp : MainLobby.getInstance().ListGameLobby) {

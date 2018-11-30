@@ -30,6 +30,13 @@ public class JoinGameLobby extends HttpServlet {
 		String gameID=request.getParameter("gameID");
 		String userName=request.getParameter("username");
 		//Here should be Kholoud Active user list request and updating my own list
+		ExternalDataGetter mine= new ExternalDataGetter();
+		try {
+			mine.UpdateActiveUsers();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		int gameId=Integer.parseInt(gameID);
 		

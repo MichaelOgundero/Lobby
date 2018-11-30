@@ -24,7 +24,13 @@ public class GetGameList extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		
+		ExternalDataGetter mine= new ExternalDataGetter();
+		try {
+			mine.UpdateActiveUsers();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 		String mainlobby =MainLobby.getInstance().toJson();
 		
 		 PrintWriter out = response.getWriter();

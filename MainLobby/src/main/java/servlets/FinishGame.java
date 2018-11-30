@@ -27,7 +27,18 @@ public class FinishGame extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		
 		String userName=request.getParameter("username");
+		
+		//load from my database
+		
 		//Here should be Kholoud Active user list request and updating my own list
+		ExternalDataGetter mine= new ExternalDataGetter();
+		try {
+			mine.UpdateActiveUsers();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		int gameLobby=MainLobby.getInstance().getGameLobbyfromUsername(userName).getGameID();
 		MainLobby.getInstance().FinishGame(gameLobby);
 		
@@ -38,6 +49,7 @@ public class FinishGame extends HttpServlet {
 		 PrintWriter out = response.getWriter();
 	     out.print(mainlobby);
 		
+	     //save to my database
 	}
 
 
