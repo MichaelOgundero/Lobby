@@ -6,7 +6,6 @@ public class ActiveUsers {
 private String username= new String();
 private int GameLobby;
 private int win; // this indicates the Score parameter that will be parsed from the Security
-
 private boolean ready=false;
 
 

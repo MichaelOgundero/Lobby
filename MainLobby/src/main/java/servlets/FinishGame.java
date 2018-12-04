@@ -26,8 +26,8 @@ public class FinishGame extends HttpServlet {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		
-		String userName=request.getParameter("username");
-		
+		String GameID=request.getParameter("GameID");
+		int gameID=Integer.parseInt(GameID);
 		//load from my database
 		
 		//Here should be Kholoud Active user list request and updating my own list
@@ -38,19 +38,18 @@ public class FinishGame extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		int gameLobby=MainLobby.getInstance().getGameLobbyfromUsername(userName).getGameID();
-		MainLobby.getInstance().FinishGame(gameLobby);
-		
-		
+		if(MainLobby.getInstance().GameIDCheck(gameID)==false) {
+			response.sendError(400, "Game with given ID does not exist");
+		}else {
+		MainLobby.getInstance().FinishGame(gameID);
 		//printing
-		String mainlobby =MainLobby.getInstance().toJson();
-		
+		 String mainlobby =MainLobby.getInstance().toJson();
 		 PrintWriter out = response.getWriter();
 	     out.print(mainlobby);
-		
+	     response.setStatus(response.SC_OK, "Action completed successfully");
 	     //save to my database
-	}
+	
+		}}
 
 
 }
