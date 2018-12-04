@@ -181,9 +181,29 @@ public String PopulateActiveUsersDemo(String username,int win,int lose) {
 	
 	return MainLobby.getInstance().toJson();
 }
-
+public ArrayList<ActiveUsers> getActiveUsersList(){
+	return  MainLobby.getInstance().ListUsers;
+}
+public ArrayList<GameLobby> getGameLobbyList(){
+	return  MainLobby.getInstance().ListGameLobby;
+}
 public void PopulateActiveUsers(ActiveUsers s ) {//get the users from khloud in a request and put them here
 	MainLobby.getInstance().ListUsers.add(s);
 }
 
+public void loadUsersFromDB(ActiveUsers s) {
+	if(MainLobby.getInstance().CheckUserInActivelist(s.getUsername())) {
+		System.out.println("User already in UsersList");
+	}else {
+		MainLobby.getInstance().ListUsers.add(s);
+	}
+}
+
+public void loadLobbiesFromDB(GameLobby s) {
+	if(MainLobby.getInstance().GameIDCheck(s.getGameID())) {
+		System.out.println("User already in ListGameLobby");
+	}else {
+		MainLobby.getInstance().ListGameLobby.add(s);
+	}
+}
 }

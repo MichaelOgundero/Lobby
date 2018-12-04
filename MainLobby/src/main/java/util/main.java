@@ -1,10 +1,10 @@
-package Game;
+package util;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import servlets.ExternalDataGetter;
+import Game.MainLobby;
 
 public class main {
 
@@ -52,15 +52,18 @@ public class main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		/*
+		
+		
 		//trying the khouloud call
-		MainLobby.getInstance().NewGameLobby(2, "houssam_mahdi");
-		System.out.println(MainLobby.getInstance().getGameLobbyfromUsername("houssam_mahdi").ToJSon());
+		MainLobby.getInstance().NewGameLobby(2, "Houssam_mahdi");
+		System.out.println(MainLobby.getInstance().getGameLobbyfromUsername("Houssam_mahdi").ToJSon());
 		String mainlobby2 =MainLobby.getInstance().toJson();
 		System.out.println(mainlobby2);
-		*/
 		
-	
+		mine.SaveToDatabase();
+		
+		
+	/*
 		ArrayList<String> users1=new ArrayList<>();
 		users1.add("houssam");
 		users1.add("test1");
@@ -71,7 +74,7 @@ public class main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		*/
 		
 	}
 

@@ -47,22 +47,7 @@ public void fromJson(String json) {
 	this.win=new1.win;
 
 }
-/*
-public JSONObject getJsonData() {
-	JSONObject test= new JSONObject();
-	try {
-		test.put("username", this.username);
-		test.put("GameLobby",this.GameLobby);
-		test.put("win", this.win);
-		test.put("Loses", this.Loses);
-	} catch (JSONException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	
-	return test;
-}
-*/
+
 
 public boolean isReady() {
 	return ready;

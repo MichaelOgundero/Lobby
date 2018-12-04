@@ -32,6 +32,18 @@ public GameLobby(int gameID, int mode) {//game lobby constructor
 	GameID = gameID;
 	this.mode = mode;
 }
+public GameLobby() {
+}
+public void AddUsersToLobbyList() {
+	ArrayList<ActiveUsers>all=MainLobby.getInstance().getActiveUsersList();
+	for(ActiveUsers temp:all) {
+	if(temp.getGameLobby()==this.GameID) {
+		if(users.size()+1<mode) {
+	users.add(temp);
+	}
+		}
+	}
+}
 private String GameNameGenarator() {
 	Random one =new Random();
 	String set="game"+one.nextInt();
@@ -56,6 +68,9 @@ public String Ready( String username) {	//user ready or unready
 	}
 	else return "user not in game";
 
+}
+public void setMode(int md) {
+	this.mode=md;
 }
 public String UnReady( String username) {	//user ready or unready
 	

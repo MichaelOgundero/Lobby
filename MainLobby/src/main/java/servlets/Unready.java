@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Game.MainLobby;
+import util.ExternalDataGetter;
 
 @WebServlet(
 name = "unready",
