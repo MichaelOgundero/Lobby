@@ -87,7 +87,7 @@ public String JoinGameLobby(String username,int GameID) {// add user to game lob
 	}
 	return "Fail";
 }
-private boolean GameIDCheck(int GameIDtest) {//checks if GameID exists
+public boolean GameIDCheck(int GameIDtest) {//checks if GameID exists
 	for (GameLobby temp : MainLobby.getInstance().ListGameLobby) {
 		
 		if(temp.getGameID()==GameIDtest) {
@@ -96,7 +96,15 @@ private boolean GameIDCheck(int GameIDtest) {//checks if GameID exists
 }
 	return false;
 	}
-
+public GameLobby GetGameLobby(int GameIDtest) {//checks if GameID exists
+	for (GameLobby temp : MainLobby.getInstance().ListGameLobby) {
+		
+		if(temp.getGameID()==GameIDtest) {
+			return temp;
+		}
+}
+	return null;
+	}
 private int GenarateGameID() {
 
 Random rand = new Random();
@@ -111,7 +119,7 @@ for (GameLobby temp : MainLobby.getInstance().ListGameLobby) {
 	
 	return number;
 }
-private ActiveUsers GetActiveUser(String username) {
+public ActiveUsers GetActiveUser(String username) {
 	for (ActiveUsers temp : MainLobby.getInstance().ListUsers) {
 		if(temp.getUsername().equals(username)) {
 			return temp;
@@ -153,13 +161,7 @@ public void loadFromJson(String json) throws Throwable {
 	new1.finalize();
 }
 public GameLobby getGameLobbyfromUsername(String username) {
-	if(GetActiveUser(username)==null) {
-		for (ActiveUsers temp : ListUsers) {
-			System.out.println(temp.getUsername());
-		}
-		String mainlobby2 =MainLobby.getInstance().toJson();
-		System.out.println(mainlobby2);
-	}
+	
 	int gameId=GetActiveUser(username).getGameLobby();
 	for (GameLobby temp : MainLobby.getInstance().ListGameLobby) {
 		if(temp.getGameID()==gameId) {

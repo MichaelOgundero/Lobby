@@ -35,6 +35,7 @@ public class GetGameList extends HttpServlet {
 		
 		 PrintWriter out = response.getWriter();
 	     out.print(mainlobby);
+	     response.setStatus(response.SC_OK, "Action completed successfully");
 	}
 
 	

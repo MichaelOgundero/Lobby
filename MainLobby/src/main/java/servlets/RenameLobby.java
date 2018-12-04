@@ -34,11 +34,19 @@ public class RenameLobby extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		if((MainLobby.getInstance().GetActiveUser(userName).getGameLobby()==0)||
+				(MainLobby.getInstance().getGameLobbyfromUsername(userName).getGameID()
+				!=MainLobby.getInstance().GetActiveUser(userName).getGameLobby())) {
+			response.sendError(400, "User not in GameLobby");
+		}else if(newLobbyName.equals("")) {
+			response.sendError(400, "Invalid length for newLobbyName");
+		}else {
 		String gameLobby=MainLobby.getInstance().getGameLobbyfromUsername(userName).RenameLobby(userName, newLobbyName);
-	
-	
-		 PrintWriter out = response.getWriter();
-	     out.print(gameLobby);
-	}
+		PrintWriter out = response.getWriter();
+	    out.print(gameLobby);
+	    response.setStatus(response.SC_OK, "Action completed successfully");
+		}
+		}
 
 }

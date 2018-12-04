@@ -12,7 +12,7 @@ private String Name;
 private ArrayList<ActiveUsers> users= new ArrayList<ActiveUsers>();
 private int mode;
 private int Seed;
-
+private boolean inGame;
 
 public String JoinGameLobby(ActiveUsers s) {//add users to game lobby
 	if(Check(s.getUsername())==true ) {
@@ -135,5 +135,24 @@ public int getSeed() {
 }
 public void setSeed(int seed) {
 	Seed = seed;
+}
+public boolean isInGame() {
+	return inGame;
+}
+public void setInGame(boolean inGame) {
+	this.inGame = inGame;
+}
+public int getMode(){
+	return mode;
+}
+public int getNumberofActiveUsers(){
+	return users.size();
+}
+public ArrayList<String> getActiveUsers(){
+	ArrayList<String> toPass= new ArrayList<String>();
+	for(ActiveUsers user: users) {
+	toPass.add(user.getUsername());
+	}
+	return toPass;
 }
 }

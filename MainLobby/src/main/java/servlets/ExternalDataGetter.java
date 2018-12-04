@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -23,6 +25,19 @@ public class ExternalDataGetter {
 		String lastName;
 		String email;
 		int score;
+	}
+	class Wrapper2{
+		 ArrayList<String> usernames=new ArrayList<>() ;
+		 int seed;
+		public Wrapper2(ArrayList<String> username, int seed1) {
+			usernames=username;
+			seed=seed1;
+		}
+		public String ToJSon() {
+			Gson gson = new Gson();
+			String json = gson.toJson(this,this.getClass());  
+			return json; 
+		}
 	}
 	private String ActiveUserURL= "https://security-dot-training-project-lab.appspot.com/activeusers";//the link of security API
 	private String StartGameURL="https://gameengine-dot-training-project-lab.appspot.com/start";
@@ -76,31 +91,40 @@ public class ExternalDataGetter {
 		
 	}
 
-	public void CallStartGame(String[] usernames,int seed) throws IOException{
+	public int CallStartGame(ArrayList<String> usernames,int seed) throws IOException{
+		Wrapper2 mine=new Wrapper2(usernames,seed);
+		String json = mine.ToJSon();
+		 
 		URL obj = new URL(StartGameURL);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		con.setRequestMethod("POST");
-		/*
-		int responseCode = con.getResponseCode();
-		System.out.println("POST Response Code :: " + responseCode);
-		*/
-		
-		class Wrapper2{
-			public String[] usernames;
-			public int seed;
-			public Wrapper2(String[] username, int seed1) {
-				usernames=username;
-				seed=seed1;
-			}
-		}
-		Gson gson=new Gson();
-		Wrapper2 mine=new Wrapper2(usernames,seed);
-		 System.out.println(mine.seed);
-		 String json = gson.toJson(mine,Wrapper2.class); 
-		con.setRequestMethod("POST");
+		con.setDoOutput(true);
+		con.setDoInput(true);
+		//setting up connection
 		con.setRequestProperty("Content-Type", "json");
 		con.setRequestProperty("Content-Length", String.valueOf(json));
 		
-		 System.out.println(json);
+		OutputStream os = con.getOutputStream();
+		BufferedWriter writer = new BufferedWriter(
+		        new OutputStreamWriter(os, "UTF-8"));
+		writer.write(json);
+		writer.flush();
+		writer.close();
+		os.close();
+		con.connect();
+		
+		System.out.println(json);
+		int responseCode = con.getResponseCode();
+		System.out.println("POST Response Code :: " + responseCode);
+	/*	
+	 
+	 if(responseCode==HttpURLConnection.HTTP_OK) {//the game has started the responce code recieved
+			MainLobby.getInstance().getGameLobbyfromUsername(usernames.get(0)).setInGame(true);
+		}
+		
+	*/
+		MainLobby.getInstance().getGameLobbyfromUsername(usernames.get(0)).setInGame(true);
+		return responseCode;
+		 
 	}
 }

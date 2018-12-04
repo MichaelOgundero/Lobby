@@ -35,11 +35,19 @@ public class LeaveGameLobby extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		if((MainLobby.getInstance().GetActiveUser(userName).getGameLobby()==0)||
+				(MainLobby.getInstance().getGameLobbyfromUsername(userName).getGameID()
+				!=MainLobby.getInstance().GetActiveUser(userName).getGameLobby())) {
+			response.sendError(400, "User not in GameLobby");
+		}else {
 	MainLobby.getInstance().getGameLobbyfromUsername(userName).LeaveGameLobby(userName);
 	String mainlobby =MainLobby.getInstance().toJson();
 	
 		 PrintWriter out = response.getWriter();
 	     out.print(mainlobby);
+	     response.setStatus(response.SC_OK, "Action completed successfully");
+		}
 	}
 
 }

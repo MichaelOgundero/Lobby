@@ -35,9 +35,14 @@ public class Unready extends HttpServlet {
 		}
 		String gameLobby=MainLobby.getInstance().getGameLobbyfromUsername(userName).UnReady(userName);
 		
-	
+		if((MainLobby.getInstance().GetActiveUser(userName).getGameLobby()==0)||
+				(MainLobby.getInstance().getGameLobbyfromUsername(userName).getGameID()
+				!=MainLobby.getInstance().GetActiveUser(userName).getGameLobby())) {
+			response.sendError(400, "User not in GameLobby");
+		}else {
 		 PrintWriter out = response.getWriter();
 	     out.print(gameLobby);
-	}
+	     response.setStatus(response.SC_OK, "Action completed successfully");
+	}}
 
 }

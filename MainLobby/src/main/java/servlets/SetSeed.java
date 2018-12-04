@@ -36,10 +36,16 @@ public class SetSeed extends HttpServlet {
 		}
 		int seed1=Integer.parseInt(seed);
 		
+		if((MainLobby.getInstance().GetActiveUser(userName).getGameLobby()==0)||
+				(MainLobby.getInstance().getGameLobbyfromUsername(userName).getGameID()
+				!=MainLobby.getInstance().GetActiveUser(userName).getGameLobby())) {
+			response.sendError(400, "User not in GameLobby");
+		}else {
 		String gameLobby=MainLobby.getInstance().getGameLobbyfromUsername(userName).SetSeed(userName, seed1);
 		
 		 PrintWriter out = response.getWriter();
 	     out.print(gameLobby);
-	}
+	     response.setStatus(response.SC_OK, "Action completed successfully");
+	}}
 
 }

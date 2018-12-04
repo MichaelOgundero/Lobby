@@ -1,6 +1,7 @@
 package Game;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import servlets.ExternalDataGetter;
@@ -59,9 +60,13 @@ public class main {
 		System.out.println(mainlobby2);
 		*/
 		
-		String[] users= {"houssam","nesq1","rick"};
+	
+		ArrayList<String> users1=new ArrayList<>();
+		users1.add("houssam");
+		users1.add("test1");
+		users1.add("user3");
 		try {
-			mine.CallStartGame(users, 15);
+			mine.CallStartGame(users1, 15);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
