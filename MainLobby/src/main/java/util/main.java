@@ -1,6 +1,7 @@
 package util;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -51,16 +52,18 @@ public class main {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}mine.SaveToDatabase();
 		
-		
+		/*
 		//trying the khouloud call
 		MainLobby.getInstance().NewGameLobby(2, "Houssam_mahdi");
 		System.out.println(MainLobby.getInstance().getGameLobbyfromUsername("Houssam_mahdi").ToJSon());
 		String mainlobby2 =MainLobby.getInstance().toJson();
 		System.out.println(mainlobby2);
+		*/
 		
 		mine.SaveToDatabase();
+		
 		
 		
 	/*
@@ -69,11 +72,31 @@ public class main {
 		users1.add("test1");
 		users1.add("user3");
 		try {
-			mine.CallStartGame(users1, 15);
+			mine.CallStartGame(users1, 0);
+		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
+		/*
+		MainLobby.getInstance().NewGameLobby(2, "Houssam_mahdi1");
+		System.out.println(MainLobby.getInstance().getGameLobbyfromUsername("Houssam_mahdi1").ToJSon());
+		int ne1=MainLobby.getInstance().getGameLobbyfromUsername("Houssam_mahdi1").getGameID();
+		MainLobby.getInstance().JoinGameLobby("houssam_mahdi_98", ne1 );
+		String mainlobby2 =MainLobby.getInstance().toJson();
+		System.out.println(mainlobby2);
+
+			
+			ArrayList<String> userstoPass=MainLobby.getInstance().getGameLobbyfromUsername("Houssam_mahdi1").getActiveUsers();
+			int seed=MainLobby.getInstance().getGameLobbyfromUsername("Houssam_mahdi1").getSeed();
+			ExternalDataGetter passer=new ExternalDataGetter();
+			try {
+			int responseCode=passer.CallStartGame(userstoPass, seed);
+			}catch (IOException e) {
+				System.out.println("error"+e.toString());
+			}
+			
 		*/
 		
 	}

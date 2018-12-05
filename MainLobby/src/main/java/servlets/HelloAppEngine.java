@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Game.MainLobby;
+import util.ExternalDataGetter;
 
 @WebServlet(
     name = "HelloAppEngine",
@@ -37,9 +39,37 @@ public class HelloAppEngine extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		*/
-    response.getWriter().print("Hello App Engine Rovshan Shirinli!\r\n");
-    
+		
+   
+    ExternalDataGetter mine= new ExternalDataGetter();
+	try {
+		mine.UpdateActiveUsers();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	String[] usernames = { "jalapeno", "anaheim", "serrano",
+		    "habanero", "thai" };
+
+	ArrayList<String> users1=new ArrayList<>();
+	users1.add("houssam");
+	users1.add("test1");
+	users1.add("user3");
+	try {
+		mine.CallStartGame(users1, 0);
+	
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}*/
+	    ExternalDataGetter mine= new ExternalDataGetter();
+		try {
+			mine.UpdateActiveUsers();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}mine.SaveToDatabase();
+	    response.getWriter().print("Hello App Engine Rovshan Shirinli!\r\n");
   }
 public void doPost(HttpServletRequest request, HttpServletResponse response) 
 	      throws IOException {

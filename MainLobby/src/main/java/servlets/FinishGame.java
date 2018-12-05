@@ -27,8 +27,9 @@ public class FinishGame extends HttpServlet {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		
-		String GameID=request.getParameter("GameID");
-		int gameID=Integer.parseInt(GameID);
+		//String GameID=request.getParameter("GameID");
+		String user=request.getParameter("username");
+		int gameID=MainLobby.getInstance().getGameLobbyfromUsername(user).getGameID();
 		//load from my database
 		
 		//Here should be Kholoud Active user list request and updating my own list

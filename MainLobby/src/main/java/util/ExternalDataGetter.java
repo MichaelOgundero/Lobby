@@ -3,22 +3,15 @@ import Game.*;
 
 import java.lang.reflect.Type;
 import com.google.gson.reflect.TypeToken;
-
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-
 import javax.servlet.ServletException;
-import java.security.SecureRandom;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -49,7 +42,8 @@ public class ExternalDataGetter {
 	}
 	private String ActiveUserURL= "https://security-dot-training-project-lab.appspot.com/activeusers";//the link of security API
 	private String StartGameURL="https://gameengine-dot-training-project-lab.appspot.com/start";
-	
+	private String TestUrl ="https://webhook.site/049593cf-2713-4912-8290-867222a7aae7";
+	private String TestUrl1=" http://localhost:8080/useradd";
 	public void loadFromDatabase() {//load from MS-sql (call first)
 		
 		//DB connection
@@ -66,15 +60,17 @@ public class ExternalDataGetter {
 		preparedStatement = connection.prepareStatement("SELECT * FROM `activeusers`");
 	
 		 ResultSet resultSet = preparedStatement.executeQuery();
+		 
 		 while (resultSet.next())
          {
 			 ActiveUsers temp=new ActiveUsers();
 			 temp.setUsername(resultSet.getString("username"));
 			 temp.setGameLobby(resultSet.getInt("gamelobby"));
-			 temp.setWin( resultSet.getInt("win"));
 			 temp.setReady(resultSet.getBoolean("ready"));
-			 
+			 if(MainLobby.getInstance().CheckUserInActivelist(temp.getUsername())) {
+				 
 			 MainLobby.getInstance().loadUsersFromDB(temp);
+			 }
          }
 		 preparedStatement = connection.prepareStatement("SELECT * FROM `lobbydata`");
 		 ResultSet resultSet2 = preparedStatement.executeQuery();
@@ -187,40 +183,58 @@ public class ExternalDataGetter {
 		}
 		
 	}
+	
 	public int CallStartGame(ArrayList<String> usernames,int seed) throws IOException{
 		Wrapper2 mine=new Wrapper2(usernames,seed);
 		String json = mine.ToJSon();
 		 
 		URL obj = new URL(StartGameURL);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+	
 		con.setRequestMethod("POST");
 		con.setDoOutput(true);
 		con.setDoInput(true);
-		//setting up connection
-		con.setRequestProperty("Content-Type", "json");
-		con.setRequestProperty("Content-Length", String.valueOf(json));
+		String charset = "UTF-8"; 
+		con.setRequestProperty("Accept-Charset", charset);
+		con.setRequestProperty("Content-Type", "application/json;charset=" + charset);
 		
-		OutputStream os = con.getOutputStream();
-		BufferedWriter writer = new BufferedWriter(
-		        new OutputStreamWriter(os, "UTF-8"));
-		writer.write(json);
-		writer.flush();
-		writer.close();
-		os.close();
+		try (OutputStream output = con.getOutputStream()) {
+		    output.write(json.getBytes(charset));
+		  }
+		
+        System.out.println(json);
 		con.connect();
-		
-		System.out.println(json);
-		int responseCode = con.getResponseCode();
-		System.out.println("POST Response Code :: " + responseCode);
-	/*	
-	 
-	 if(responseCode==HttpURLConnection.HTTP_OK) {//the game has started the responce code recieved
-			MainLobby.getInstance().getGameLobbyfromUsername(usernames.get(0)).setInGame(true);
-		}
-		
-	*/
-		MainLobby.getInstance().getGameLobbyfromUsername(usernames.get(0)).setInGame(true);
-		return responseCode;
+		String output1=con.getResponseMessage();
+	       System.out.println(output1);
+	
+	   MainLobby.getInstance().getGameLobbyfromUsername(usernames.get(0)).setInGame(true);
+		return con.getResponseCode();
 		 
+	}
+	
+	public void deleteGameLobbyDb(int GameID) {
+		 Connection connection = null;
+	        try {
+
+	            connection = dbConnection.conn();
+
+	        }
+	        catch(ServletException ex) {
+	            System.out.println("SQL Error: " + ex.getMessage());
+	        }
+	        PreparedStatement preparedStatement=null;
+	       
+	        try {
+	        	//emptying the tables
+	        	 preparedStatement= connection.prepareStatement("DELETE FROM lobbydata WHERE gameID = ?");
+	             preparedStatement.setInt(1,GameID);   
+	             preparedStatement.executeUpdate();
+	           
+	        	
+	            
+	            connection.close();
+	        } catch (SQLException ex) {
+	            System.out.println("SQL Error: " + ex.getMessage());
+	        }
 	}
 }

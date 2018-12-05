@@ -113,7 +113,7 @@ public boolean allReady() {		// check if all users are ready
 		if(temp.isReady()==true)
 			flag++;
 	}
-	if(flag==4)
+	if(flag==users.size()&&users.size()>1)
 		{return true;}
 	else
 		return false;

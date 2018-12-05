@@ -44,6 +44,10 @@ public String FinishGame(int GameID) {	//will be given to Game Engine delete the
 			
 	}
 }
+public void DeleteAll() {
+	 MainLobby.getInstance().ListGameLobby=new ArrayList<GameLobby>();
+	 MainLobby.getInstance().ListUsers= new ArrayList<ActiveUsers>() ;
+}
 public String NewGameLobby(int playerNumber,String username) {//add new Game lobby
 	if(playerNumber>4||playerNumber<0) {
 		return "Wrong number of Players";

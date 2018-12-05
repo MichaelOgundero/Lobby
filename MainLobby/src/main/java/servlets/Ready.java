@@ -30,6 +30,8 @@ public class Ready extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		String userName=request.getParameter("username");
 		
+		String gameLobby=new String();
+		
 		//Here should be Kholoud Active user list request and updating my own list
 		ExternalDataGetter mine= new ExternalDataGetter();
 		try {
@@ -46,19 +48,21 @@ public class Ready extends HttpServlet {
 		}else {
 			
 		
-		String gameLobby=MainLobby.getInstance().getGameLobbyfromUsername(userName).Ready(userName);
-		 PrintWriter out = response.getWriter();
-	     out.print(gameLobby);
+		 gameLobby=MainLobby.getInstance().getGameLobbyfromUsername(userName).Ready(userName);
+		
 	     response.setStatus(response.SC_OK, "Action completed successfully");
 		}
 		//calling start game f all users are ready
 		if(MainLobby.getInstance().getGameLobbyfromUsername(userName).allReady()==true) {
+			
 			ArrayList<String> userstoPass=MainLobby.getInstance().getGameLobbyfromUsername(userName).getActiveUsers();
 			int seed=MainLobby.getInstance().getGameLobbyfromUsername(userName).getSeed();
 			ExternalDataGetter passer=new ExternalDataGetter();
 			int responseCode=passer.CallStartGame(userstoPass, seed);
 			if(responseCode==201) {
 				System.out.println("The responseCode recieved succesfully : 201");
+				 PrintWriter out = response.getWriter();
+			     out.print(gameLobby+"The responseCode recieved succesfully : 201");
 			}
 		}
 		}
